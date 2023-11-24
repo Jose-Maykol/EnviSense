@@ -1,5 +1,7 @@
 
 import 'package:airsense/constant/colors.dart';
+import 'package:airsense/widgets/buttons/button.dart';
+import 'package:airsense/widgets/buttons/button_icon.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
@@ -60,69 +62,22 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextButton(
+                Button(
                   onPressed: () {},
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 17, horizontal: 40)),
-                    backgroundColor: MaterialStateProperty.all(AppColor.blue400),
-                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered)) {
-                          return AppColor.blue500;
-                        }
-                        if (states.contains(MaterialState.focused) ||
-                            states.contains(MaterialState.pressed)) {
-                          return AppColor.blue500;
-                        }
-                        return null; // Defer to the widget's default.
-                        },
-                    ),
-                    minimumSize: MaterialStateProperty.all<Size>(
-                      const Size(double.infinity, 0)
-                    ),
-                  ),
-                  child: const Text(
-                    'Ingresar',
-                    style: TextStyle(
-                      color: AppColor.white,
-                    ),
-                  ),
+                  backgroundColor: AppColor.blue400,
+                  overlayColor: AppColor.blue500,
+                  textColor: AppColor.white,
+                  text: 'Ingresar',
                 ),
                 const SizedBox(height: 20),
-                TextButton.icon(
+                ButtonIcon(
                   onPressed: () {},
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 15, horizontal: 40)),
-                    backgroundColor: MaterialStateProperty.all(AppColor.white),
-                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered)) {
-                          return AppColor.grey100;
-                        }
-                        if (states.contains(MaterialState.focused) ||
-                            states.contains(MaterialState.pressed)) {
-                          return AppColor.grey100;
-                        }
-                        return null;
-                        },
-                    ),
-                    minimumSize: MaterialStateProperty.all<Size>(
-                      const Size(double.infinity, 0)
-                    ),
-                    side: MaterialStateProperty.all(
-                      const BorderSide(
-                        color: AppColor.grey400,
-                        width: 1,
-                      )
-                    ),
-                  ),
                   icon: Image.asset('assets/icons/google.png', width: 20, height: 20),
-                  label: const Text(
-                    'Ingresar con Google',
-                    style: TextStyle(
-                      color: AppColor.black,
-                    ),
-                  )
+                  backgroundColor: AppColor.white,
+                  overlayColor: AppColor.grey100,
+                  textColor: AppColor.grey500,
+                  borderColor: AppColor.grey200,
+                  text: 'Ingresar con Google',
                 ),
                 const SizedBox(height: 20),
                 const Divider(
@@ -130,39 +85,13 @@ class LoginView extends StatelessWidget {
                   height: 1,
                 ),
                 const SizedBox(height: 20),
-                TextButton(
+                Button(
                   onPressed: () {},
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 17, horizontal: 40)),
-                    backgroundColor: MaterialStateProperty.all(AppColor.white),
-                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered)) {
-                          return AppColor.grey100;
-                        }
-                        if (states.contains(MaterialState.focused) ||
-                            states.contains(MaterialState.pressed)) {
-                          return AppColor.grey100;
-                        }
-                        return null;
-                        },
-                    ),
-                    minimumSize: MaterialStateProperty.all<Size>(
-                      const Size(double.infinity, 0)
-                    ),
-                    side: MaterialStateProperty.all(
-                      const BorderSide(
-                        color: AppColor.grey200,
-                        width: 1,
-                      )
-                    ),
-                  ),
-                  child: const Text(
-                    'Registrarte',
-                    style: TextStyle(
-                      color: AppColor.grey200,
-                    ),
-                  ),
+                  backgroundColor: AppColor.white,
+                  overlayColor: AppColor.grey100,
+                  textColor: AppColor.grey400,
+                  borderColor: AppColor.grey200, 
+                  text: 'Registrarse',
                 )
               ],
             )

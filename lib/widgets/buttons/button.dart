@@ -22,7 +22,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ButtonStyle(
         padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 17, horizontal: 40)),
         backgroundColor: MaterialStateProperty.all(backgroundColor),

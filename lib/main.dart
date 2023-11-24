@@ -1,4 +1,5 @@
 import 'package:airsense/constant/colors.dart';
+import 'package:airsense/view/home/home_view.dart';
 import 'package:airsense/view/login/login_view.dart';
 import 'package:flutter/material.dart';
 
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
       home: const LoginView(),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      routes: const {
-        
+      routes: {
+        '/home': (context) => const HomeView(),
       },
     );
   }

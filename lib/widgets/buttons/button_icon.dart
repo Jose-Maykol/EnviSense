@@ -24,7 +24,7 @@ class ButtonIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ButtonStyle(
         padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 15, horizontal: 40)),
         backgroundColor: MaterialStateProperty.all(backgroundColor),

@@ -1,10 +1,16 @@
 import 'package:airsense/constant/colors.dart';
+import 'package:airsense/firebase_options.dart';
 import 'package:airsense/view/home/home_view.dart';
 import 'package:airsense/view/login/login_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {

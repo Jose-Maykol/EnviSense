@@ -1,4 +1,6 @@
 import 'package:airsense/constant/colors.dart';
+import 'package:airsense/widgets/charts/bar_chart_last_week.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -180,7 +182,22 @@ class HomeView extends StatelessWidget {
                   ),
                 )
               ],
-            )
+            ),
+            const SizedBox(height: 20),
+            const SizedBox(
+              width: double.infinity,
+              child: Text(
+                'Historial ultima semana',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColor.grey500,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.start,
+              ),
+            ),
+            const SizedBox(height: 20),
+            const BarChartLastWeek(),
           ],
         ),
       ),

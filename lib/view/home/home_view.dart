@@ -21,8 +21,7 @@ class HomeView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget> [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  height: 150,
+                  width: MediaQuery.of(context).size.width * 0.45,
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +57,6 @@ class HomeView extends StatelessWidget {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.4,
-                  height: MediaQuery.of(context).size.width * 0.4,
                   decoration: BoxDecoration(
                     color: AppColor.blue500,
                     borderRadius: BorderRadius.circular(10),

@@ -1,14 +1,57 @@
 
 import 'package:airsense/constant/colors.dart';
 import 'package:airsense/widgets/buttons/button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:airsense/widgets/buttons/button_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  void signInUser(BuildContext context) {
+    final email = emailController.text;
+    final password = passwordController.text;
+    signInWithEmailPassword(email, password).then(
+      (success) => {
+        emailController.clear(),
+        passwordController.clear(),
+        if (success) Navigator.pushNamed(context, '/home')
+        else ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Error al iniciar sesión'),
+          ),
+        ),
+      },
+    );
+  }
+
+  Future<bool> signInWithEmailPassword(String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User? user = userCredential.user;
+      print(user);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('user', user?.uid.toString() ?? '');
+      prefs.setString('email', user?.email.toString() ?? '');
+      prefs.setString('name', user?.displayName.toString() ?? '');
+      prefs.setString('photo', user?.photoURL.toString() ?? '');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // Evita que el teclado oculte el contenido
       body: Stack(
         children: [
           Padding(
@@ -45,6 +88,7 @@ class LoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     labelText: 'Email',
@@ -54,6 +98,7 @@ class LoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
                     labelText: 'Password',
@@ -64,8 +109,7 @@ class LoginView extends StatelessWidget {
                 const SizedBox(height: 20),
                 Button(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
-                    print('Ingresar');
+                    signInUser(context);
                   },
                   backgroundColor: AppColor.blue400,
                   overlayColor: AppColor.blue500,

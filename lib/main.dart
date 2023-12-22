@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           secondaryContainer: AppColor.blue500,
         )
       ),
-      home: const LoginView(),
+      home: LoginView(),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {

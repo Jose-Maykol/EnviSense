@@ -49,7 +49,7 @@ class UserHeader extends StatelessWidget {
                       width: 50,
                       height: 50,
                       color: AppColor.blue500,
-                      child: snapshot.data![3] == null
+                      child: snapshot.data![3] != null
                           ? Image.network(
                               snapshot.data![3]!,
                               fit: BoxFit.cover,
@@ -79,7 +79,7 @@ class UserHeader extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: snapshot.data![0] == null ? snapshot.data![0]: snapshot.data![1],
+                          text: snapshot.data![0] ?? snapshot.data![1],
                           style: const TextStyle(
                             fontSize: 16,
                             color: AppColor.blue500,

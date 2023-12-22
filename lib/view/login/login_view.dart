@@ -1,6 +1,7 @@
 
 import 'package:airsense/constant/colors.dart';
 import 'package:airsense/widgets/buttons/button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:airsense/widgets/buttons/button_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,6 +30,19 @@ class LoginView extends StatelessWidget {
     );
   }
 
+  void signInUserWithGoogle(BuildContext context) {
+    signInWithGoogle().then(
+      (success) => {
+        if (success) Navigator.pushNamed(context, '/home')
+        else ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Error al iniciar sesión'),
+          ),
+        ),
+      },
+    );
+  }
+
   Future<bool> signInWithEmailPassword(String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -44,6 +58,27 @@ class LoginView extends StatelessWidget {
       prefs.setString('photo', user?.photoURL.toString() ?? '');
       return true;
     } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('user', userCredential.user?.uid.toString() ?? '');
+      prefs.setString('email', userCredential.user?.email.toString() ?? '');
+      prefs.setString('name', userCredential.user?.displayName.toString() ?? '');
+      prefs.setString('photo', userCredential.user?.photoURL.toString() ?? '');
+      return true;
+    } catch (e) {
+      print(e);
       return false;
     }
   }
@@ -118,7 +153,9 @@ class LoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ButtonIcon(
-                  onPressed: () {},
+                  onPressed: () {
+                    signInUserWithGoogle(context);
+                  },
                   icon: Image.asset('assets/icons/google.png', width: 20, height: 20),
                   backgroundColor: AppColor.white,
                   overlayColor: AppColor.grey100,

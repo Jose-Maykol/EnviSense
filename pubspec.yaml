@@ -39,6 +39,7 @@ dependencies:
   fl_chart: 0.64.0
   firebase_auth: ^4.15.3
   shared_preferences: ^2.2.2
+  google_sign_in: ^6.1.6
 
 dev_dependencies:
   flutter_test:

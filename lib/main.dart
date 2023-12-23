@@ -3,19 +3,24 @@ import 'package:airsense/firebase_options.dart';
 import 'package:airsense/view/home/home_view.dart';
 import 'package:airsense/view/login/login_view.dart';
 import 'package:airsense/view/register/register_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  User? user = FirebaseAuth.instance.currentUser;
+  Widget startScreen = user == null ? LoginView() : const HomeView();
+  runApp(MyApp(startScreen: startScreen));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Widget startScreen;
+
+  const MyApp({Key? key, required this.startScreen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,7 @@ class MyApp extends StatelessWidget {
           secondaryContainer: AppColor.blue500,
         )
       ),
-      home: LoginView(),
+      home: startScreen,
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {

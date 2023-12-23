@@ -2,6 +2,7 @@ import 'package:airsense/constant/colors.dart';
 import 'package:airsense/firebase_options.dart';
 import 'package:airsense/view/home/home_view.dart';
 import 'package:airsense/view/login/login_view.dart';
+import 'package:airsense/view/register/register_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/home': (context) => const HomeView(),
+        '/register': (context) => RegisterView(),
       },
     );
   }

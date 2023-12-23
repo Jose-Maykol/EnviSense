@@ -1,14 +1,11 @@
-
 import 'package:airsense/constant/colors.dart';
 import 'package:airsense/widgets/buttons/button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:airsense/widgets/buttons/button_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginView extends StatelessWidget {
-  LoginView({Key? key}) : super(key: key);
+class RegisterView extends StatelessWidget {
+  RegisterView({super.key});
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -16,36 +13,23 @@ class LoginView extends StatelessWidget {
   void signInUser(BuildContext context) {
     final email = emailController.text;
     final password = passwordController.text;
-    signInWithEmailPassword(email, password).then(
+    registerWithEmailPassword(email, password).then(
       (success) => {
         emailController.clear(),
         passwordController.clear(),
         if (success) Navigator.pushNamed(context, '/home')
         else ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Error al iniciar sesión'),
+            content: Text('Error al registrarse'),
           ),
         ),
       },
     );
   }
 
-  void signInUserWithGoogle(BuildContext context) {
-    signInWithGoogle().then(
-      (success) => {
-        if (success) Navigator.pushNamed(context, '/home')
-        else ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error al iniciar sesión'),
-          ),
-        ),
-      },
-    );
-  }
-
-  Future<bool> signInWithEmailPassword(String email, String password) async {
+  Future<bool> registerWithEmailPassword(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -58,26 +42,6 @@ class LoginView extends StatelessWidget {
       prefs.setString('photo', user?.photoURL.toString() ?? '');
       return true;
     } catch (e) {
-      return false;
-    }
-  }
-
-  Future<bool> signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('user', userCredential.user?.uid.toString() ?? '');
-      prefs.setString('email', userCredential.user?.email.toString() ?? '');
-      prefs.setString('name', userCredential.user?.displayName.toString() ?? '');
-      prefs.setString('photo', userCredential.user?.photoURL.toString() ?? '');
-      return true;
-    } catch (e) {
       print(e);
       return false;
     }
@@ -86,7 +50,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, // Evita que el teclado oculte el contenido
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Padding(
@@ -149,36 +113,19 @@ class LoginView extends StatelessWidget {
                   backgroundColor: AppColor.blue400,
                   overlayColor: AppColor.blue500,
                   textColor: AppColor.white,
-                  text: 'Ingresar',
-                ),
-                const SizedBox(height: 20),
-                ButtonIcon(
-                  onPressed: () {
-                    signInUserWithGoogle(context);
-                  },
-                  icon: Image.asset('assets/icons/google.png', width: 20, height: 20),
-                  backgroundColor: AppColor.white,
-                  overlayColor: AppColor.grey100,
-                  textColor: AppColor.grey500,
-                  borderColor: AppColor.grey200,
-                  text: 'Ingresar con Google',
-                ),
-                const SizedBox(height: 20),
-                const Divider(
-                  color: AppColor.grey100,
-                  height: 1,
+                  text: 'Registrarse',
                 ),
                 const SizedBox(height: 20),
                 Button(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/register');
+                    Navigator.pushNamed(context, '/');
                   },
                   backgroundColor: AppColor.white,
                   overlayColor: AppColor.grey100,
                   textColor: AppColor.grey400,
                   borderColor: AppColor.grey200, 
-                  text: 'Registrarse',
-                )
+                  text: 'Volver',
+                ),
               ],
             )
           ),
@@ -194,7 +141,7 @@ class LoginView extends StatelessWidget {
               ),
               child: const Center(
                 child: Text(
-                  'Login',
+                  'Register',
                   style: TextStyle(
                     color: AppColor.white,
                     fontSize: 24,
@@ -209,3 +156,4 @@ class LoginView extends StatelessWidget {
     );
   }
 }
+

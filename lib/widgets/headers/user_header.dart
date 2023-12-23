@@ -38,6 +38,10 @@ class UserHeader extends StatelessWidget {
           return const Text('Error al cargar los datos');
         }  
         else if (snapshot.hasData && snapshot.data != [ null, null, null, null ]) {
+          
+          print('imagen ${snapshot.data?[3]}');
+          print(snapshot.data?[3] == null || snapshot.data?[3] == 'null');
+
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget> [
@@ -49,43 +53,51 @@ class UserHeader extends StatelessWidget {
                       width: 50,
                       height: 50,
                       color: AppColor.blue500,
-                      child: snapshot.data![3] != null
-                          ? Image.network(
-                              snapshot.data![3]!,
-                              fit: BoxFit.cover,
-                            )
-                          : Center(
-                              child: Text(
-                                snapshot.data![1]![0].toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColor.white,
-                                ),
+                      child: snapshot.data?[3] != null && snapshot.data?[3] != 'null'
+                        ? Image.network(
+                            snapshot.data![3]!,
+                            fit: BoxFit.cover,
+                          )
+                        : Center(
+                            child: Text(
+                              snapshot.data![1]![0].toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.white,
                               ),
                             ),
+                          )
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: 'Bienvenido ',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AppColor.grey200,
-                            fontWeight: FontWeight.bold,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          const TextSpan(
+                            text: 'Bienvenido ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AppColor.grey200,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: snapshot.data![0] ?? snapshot.data![1],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: AppColor.blue500,
-                            fontWeight: FontWeight.bold,
+                          TextSpan(
+                            text: snapshot.data![0]?.isNotEmpty == true && snapshot.data![0] != 'null'
+                              ? snapshot.data![0]
+                              : snapshot.data![1],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: AppColor.blue500,
+                              fontWeight: FontWeight.bold,                          
+                            ),
                           ),
-                        ),]
+                        ]
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                   ),
                 ],

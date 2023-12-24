@@ -47,6 +47,14 @@ class _MainViewState extends State<MainView> {
           ContactsView(),
         ],
       ),
+      floatingActionButton: _selectedIndex == 1 ? FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: AppColor.blue500,
+        child: const Icon(
+          Icons.add,
+          color: AppColor.white,
+        ),
+      ) : null,
     );
   }
 }

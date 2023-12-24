@@ -28,11 +28,10 @@ class _ContactsViewState extends State<ContactsView> {
     try {
       print('Getting contacts...');
       QuerySnapshot querySnapshot = await firestore.collection('contacts').get();
-      print(querySnapshot.docs.length);
       querySnapshot.docs.forEach((doc) {
         Contact contact = Contact.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>);
         fetchedContacts.add(contact);
-        print(contact.name);
+        print(contact.id );
       });
 
       setState(() {
@@ -44,13 +43,50 @@ class _ContactsViewState extends State<ContactsView> {
     }
   }
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
+
+    Future<void> deleteContactFromFirebase(String contactId) async {
+      try {
+        await FirebaseFirestore.instance.collection('contacts').doc(contactId).delete();
+        print('Contacto eliminado de Firebase');
+      } catch (e) {
+        print('Error al eliminar el contacto de Firebase: $e');
+        // Aquí podrías manejar el error de eliminación de Firebase, si es necesario
+      }
+    }
+
+
+    void showDeleteConfirmationDialog(BuildContext context, int index) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Eliminar contacto'),
+            content: const Text('¿Estás seguro de que deseas eliminar este contacto?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    contacts.removeAt(index);
+                  });
+                  deleteContactFromFirebase(contacts[index].id);
+                  Navigator.pop(context); // Cierra el diálogo
+                },
+                child: const Text('Eliminar'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
@@ -91,13 +127,20 @@ class _ContactsViewState extends State<ContactsView> {
                           onPressed: () {
                             print('Edit contact');
                           },
-                          icon: const Icon(Icons.edit),
+                          icon: const Icon(
+                            Icons.edit,
+                            color: AppColor.blue300,
+                          ),
                         ),
                         IconButton(
                           onPressed: () {
                             print('Delete contact');
+                            showDeleteConfirmationDialog(context, index);
                           },
-                          icon: const Icon(Icons.delete),
+                          icon: const Icon(
+                            Icons.delete,
+                            color: AppColor.blue600,
+                          ),
                         ),
                       ],
                     ),

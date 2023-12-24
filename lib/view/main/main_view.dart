@@ -4,7 +4,7 @@ import 'package:airsense/view/home/home_view.dart';
 import 'package:flutter/material.dart';
 
 class MainView extends StatefulWidget {
-  MainView({Key? key}) : super(key: key);
+  const MainView({Key? key}) : super(key: key);
 
   @override
   State<MainView> createState() => _MainViewState();

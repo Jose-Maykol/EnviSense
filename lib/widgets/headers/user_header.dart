@@ -38,10 +38,6 @@ class UserHeader extends StatelessWidget {
           return const Text('Error al cargar los datos');
         }  
         else if (snapshot.hasData && snapshot.data != [ null, null, null, null ]) {
-          
-          print('imagen ${snapshot.data?[3]}');
-          print(snapshot.data?[3] == null || snapshot.data?[3] == 'null');
-
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget> [

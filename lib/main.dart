@@ -1,8 +1,7 @@
 import 'package:airsense/constant/colors.dart';
 import 'package:airsense/firebase_options.dart';
-import 'package:airsense/view/home/home_view.dart';
 import 'package:airsense/view/login/login_view.dart';
-import 'package:airsense/view/register/register_view.dart';
+import 'package:airsense/view/main/main_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   User? user = FirebaseAuth.instance.currentUser;
-  Widget startScreen = user == null ? LoginView() : const HomeView();
+  Widget startScreen = user == null ? LoginView() : MainView();
   runApp(MyApp(startScreen: startScreen));
 }
 
@@ -41,8 +40,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/home': (context) => const HomeView(),
-        '/register': (context) => RegisterView(),
+        '/home':(context) => MainView(),
       },
     );
   }

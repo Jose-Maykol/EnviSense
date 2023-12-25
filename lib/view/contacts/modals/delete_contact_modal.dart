@@ -1,7 +1,12 @@
+// ignore_for_file: use_build_context_synchronously, unused_result
+
+import 'package:airsense/providers/contact_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DeleteConfirmationDialog {
-  static void show(BuildContext context, VoidCallback onDeleteConfirmed) {
+  static void show(BuildContext context, String contactId, WidgetRef ref) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -16,8 +21,9 @@ class DeleteConfirmationDialog {
               child: const Text('Cancelar'),
             ),
             TextButton(
-              onPressed: () {
-                onDeleteConfirmed(); // Llama a la función de eliminación confirmada
+              onPressed: () async {
+                await FirebaseFirestore.instance.collection('contacts').doc(contactId).delete();
+                ref.refresh(contactProvider);
                 Navigator.pop(context); // Cierra el diálogo
               },
               child: const Text('Eliminar'),

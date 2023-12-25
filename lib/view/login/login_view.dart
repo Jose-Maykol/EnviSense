@@ -171,12 +171,14 @@ class LoginView extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     const Divider(
-                      color: AppColor.grey400,
+                      color: AppColor.grey100,
                       height: 1,
                     ),
                     const SizedBox(height: 20),
                     Button(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/register');
+                      },
                       backgroundColor: AppColor.white,
                       overlayColor: AppColor.grey100,
                       textColor: AppColor.grey400,

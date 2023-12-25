@@ -1,5 +1,6 @@
 import 'package:airsense/constant/colors.dart';
 import 'package:airsense/models/Contact.dart';
+import 'package:airsense/view/contacts/modals/delelete_modal.dart';
 import 'package:airsense/widgets/headers/user_header.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -57,34 +58,14 @@ class _ContactsViewState extends State<ContactsView> {
     }
 
 
-    void showDeleteConfirmationDialog(BuildContext context, int index) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Eliminar contacto'),
-            content: const Text('¿Estás seguro de que deseas eliminar este contacto?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancelar'),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    contacts.removeAt(index);
-                  });
-                  deleteContactFromFirebase(contacts[index].id);
-                  Navigator.pop(context); // Cierra el diálogo
-                },
-                child: const Text('Eliminar'),
-              ),
-            ],
-          );
-        },
-      );
+    void handleDeleteContact(BuildContext context, int index) {
+      String contactId = contacts[index].id;
+      DeleteConfirmationDialog.show(context, () {
+        deleteContactFromFirebase(contactId);
+        setState(() {
+          contacts.removeAt(index);
+        });
+      });
     }
 
     return SingleChildScrollView(
@@ -135,7 +116,7 @@ class _ContactsViewState extends State<ContactsView> {
                         IconButton(
                           onPressed: () {
                             print('Delete contact');
-                            showDeleteConfirmationDialog(context, index);
+                            handleDeleteContact(context, index);
                           },
                           icon: const Icon(
                             Icons.delete,

@@ -1,6 +1,7 @@
 import 'package:airsense/constant/colors.dart';
 import 'package:airsense/models/Contact.dart';
-import 'package:airsense/view/contacts/modals/delelete_modal.dart';
+import 'package:airsense/view/contacts/modals/delete_contact_modal.dart';
+import 'package:airsense/view/contacts/modals/edit_contact_modal.dart';
 import 'package:airsense/widgets/headers/user_header.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,6 @@ class _ContactsViewState extends State<ContactsView> {
       }
     }
 
-
     void handleDeleteContact(BuildContext context, int index) {
       String contactId = contacts[index].id;
       DeleteConfirmationDialog.show(context, () {
@@ -66,6 +66,11 @@ class _ContactsViewState extends State<ContactsView> {
           contacts.removeAt(index);
         });
       });
+    }
+
+    void handleEditContact(BuildContext context, int index) {
+      String contactId = contacts[index].id;
+      EditContactModal.show(context, contactId);
     }
 
     return SingleChildScrollView(
@@ -107,6 +112,7 @@ class _ContactsViewState extends State<ContactsView> {
                         IconButton(
                           onPressed: () {
                             print('Edit contact');
+                            handleEditContact(context, index);
                           },
                           icon: const Icon(
                             Icons.edit,

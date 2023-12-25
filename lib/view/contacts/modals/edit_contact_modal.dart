@@ -1,10 +1,12 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_result
 
+import 'package:airsense/providers/contact_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EditContactModal {
-  static void show(BuildContext context, String contactId) async {
+  static void show(BuildContext context, String contactId, WidgetRef ref) async {
     DocumentSnapshot<Map<String, dynamic>> contactSnapshot = await FirebaseFirestore.instance.collection('contacts').doc(contactId).get();
 
     if (!contactSnapshot.exists) {
@@ -48,13 +50,12 @@ class EditContactModal {
               onPressed: () async {
                 String newName = nameController.text;
                 String newEmail = emailController.text;
-
                 // Actualizar el contacto en Firebase con los nuevos datos
                 await FirebaseFirestore.instance.collection('contacts').doc(contactId).update({
                   'name': newName,
                   'email': newEmail,
                 });
-
+                ref.refresh(contactProvider);
                 Navigator.pop(context);
               },
               child: const Text('Guardar'),

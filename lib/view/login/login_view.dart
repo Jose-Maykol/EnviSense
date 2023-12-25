@@ -1,4 +1,3 @@
-
 import 'package:airsense/constant/colors.dart';
 import 'package:airsense/widgets/buttons/button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -20,12 +19,14 @@ class LoginView extends StatelessWidget {
       (success) => {
         emailController.clear(),
         passwordController.clear(),
-        if (success) Navigator.pushNamed(context, '/home')
-        else ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error al iniciar sesión'),
+        if (success)
+          Navigator.pushNamed(context, '/home')
+        else
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Error al iniciar sesión'),
+            ),
           ),
-        ),
       },
     );
   }
@@ -33,24 +34,29 @@ class LoginView extends StatelessWidget {
   void signInUserWithGoogle(BuildContext context) {
     signInWithGoogle().then(
       (success) => {
-        if (success) Navigator.pushNamed(context, '/home')
-        else ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error al iniciar sesión'),
+        if (success)
+          Navigator.pushNamed(context, '/home')
+        else
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Error al iniciar sesión'),
+            ),
           ),
-        ),
       },
     );
   }
 
   Future<bool> signInWithEmailPassword(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       User? user = userCredential.user;
-      print(user);
+      String? token = await userCredential.user?.getIdToken();
+      print("TOKENNNN");
+      print(token);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('user', user?.uid.toString() ?? '');
       prefs.setString('email', user?.email.toString() ?? '');
@@ -65,16 +71,19 @@ class LoginView extends StatelessWidget {
   Future<bool> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('user', userCredential.user?.uid.toString() ?? '');
       prefs.setString('email', userCredential.user?.email.toString() ?? '');
-      prefs.setString('name', userCredential.user?.displayName.toString() ?? '');
+      prefs.setString(
+          'name', userCredential.user?.displayName.toString() ?? '');
       prefs.setString('photo', userCredential.user?.photoURL.toString() ?? '');
       return true;
     } catch (e) {
@@ -86,124 +95,119 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, // Evita que el teclado oculte el contenido
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(40.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget> [
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: AppColor.blue400,
-                      width: 3,
+        resizeToAvoidBottomInset:
+            false, // Evita que el teclado oculte el contenido
+        body: Stack(
+          children: [
+            Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColor.blue400,
+                            width: 3,
+                          ),
+                        ),
+                        child: Center(
+                            child: Image.asset('assets/icons/airsense.png',
+                                width: 115, height: 115))),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'AirSense',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: AppColor.blue400,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/icons/airsense.png',
-                      width: 115,
-                      height: 115
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Button(
+                      onPressed: () {
+                        signInUser(context);
+                      },
+                      backgroundColor: AppColor.blue400,
+                      overlayColor: AppColor.blue500,
+                      textColor: AppColor.white,
+                      text: 'Ingresar',
+                    ),
+                    const SizedBox(height: 20),
+                    ButtonIcon(
+                      onPressed: () {
+                        signInUserWithGoogle(context);
+                      },
+                      icon: Image.asset('assets/icons/google.png',
+                          width: 20, height: 20),
+                      backgroundColor: AppColor.white,
+                      overlayColor: AppColor.grey100,
+                      textColor: AppColor.grey500,
+                      borderColor: AppColor.grey200,
+                      text: 'Ingresar con Google',
+                    ),
+                    const SizedBox(height: 20),
+                    const Divider(
+                      color: AppColor.grey400,
+                      height: 1,
+                    ),
+                    const SizedBox(height: 20),
+                    Button(
+                      onPressed: () {},
+                      backgroundColor: AppColor.white,
+                      overlayColor: AppColor.grey100,
+                      textColor: AppColor.grey400,
+                      borderColor: AppColor.grey200,
+                      text: 'Registrarse',
                     )
-                  )
+                  ],
+                )),
+            Positioned(
+              top: -50,
+              left: -25,
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: const BoxDecoration(
+                  color: AppColor.blue400,
+                  shape: BoxShape.circle,
                 ),
-                const SizedBox(height: 20),
-                const Text(
-                  'AirSense',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: AppColor.blue400,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Button(
-                  onPressed: () {
-                    signInUser(context);
-                  },
-                  backgroundColor: AppColor.blue400,
-                  overlayColor: AppColor.blue500,
-                  textColor: AppColor.white,
-                  text: 'Ingresar',
-                ),
-                const SizedBox(height: 20),
-                ButtonIcon(
-                  onPressed: () {
-                    signInUserWithGoogle(context);
-                  },
-                  icon: Image.asset('assets/icons/google.png', width: 20, height: 20),
-                  backgroundColor: AppColor.white,
-                  overlayColor: AppColor.grey100,
-                  textColor: AppColor.grey500,
-                  borderColor: AppColor.grey200,
-                  text: 'Ingresar con Google',
-                ),
-                const SizedBox(height: 20),
-                const Divider(
-                  color: AppColor.grey400,
-                  height: 1,
-                ),
-                const SizedBox(height: 20),
-                Button(
-                  onPressed: () {},
-                  backgroundColor: AppColor.white,
-                  overlayColor: AppColor.grey100,
-                  textColor: AppColor.grey400,
-                  borderColor: AppColor.grey200, 
-                  text: 'Registrarse',
-                )
-              ],
-            )
-          ),
-          Positioned(
-            top: -50,
-            left: -25,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: const BoxDecoration(
-                color: AppColor.blue400,
-                shape: BoxShape.circle,
-              ),
-              child: const Center(
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    color: AppColor.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                child: const Center(
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
+                      color: AppColor.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 }

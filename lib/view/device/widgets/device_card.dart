@@ -19,6 +19,9 @@ class DeviceCard extends StatelessWidget {
     return StreamBuilder(
       stream: _deviceRef.onValue,
       builder: (context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.data!.snapshot.value == null) {
+          return const Center(child: Text('Error'));
+        }
         if (snapshot.hasData) {
           final deviceData = snapshot.data!.snapshot.value;
           final value = deviceData['value'];
@@ -36,49 +39,80 @@ class DeviceCard extends StatelessWidget {
             child: Container(
               // height: 150,
               margin: const EdgeInsets.symmetric(vertical: 5),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: AppColor.blue500,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                color: device.type == 'Humedad' ? Colors.cyan[400] : Colors.red[500],
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      device.type,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: AppColor.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                    const SizedBox(height: 10),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          category ?? '',
+                          device.name,
                           style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColor.grey100,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          value.toString(),
-                          style: const TextStyle(
-                            fontSize: 30,
-                            color: AppColor.grey100,
+                            fontSize: 18,
+                            color: AppColor.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          textAlign: TextAlign.center,
-                        )
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          device.type,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColor.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
                       ],
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: 75,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            category ?? '',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppColor.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 2),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: value.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 30,
+                                    color: AppColor.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: device.unit,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: AppColor.white,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

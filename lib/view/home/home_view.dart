@@ -52,11 +52,6 @@ class HomeView extends ConsumerWidget {
                       return DeviceCard(device: device);
                     }).toList(),
                   ),
-                Column(
-                  children: devices.map((device) {
-                    return DeviceCard(device: device);
-                  }).toList(),
-                ),
               ],
             ),
           ),

@@ -75,27 +75,27 @@ class RealtimeDevice extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: value.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 30,
-                                      color: AppColor.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: value.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 30,
+                                    color: AppColor.white,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  const TextSpan(
-                                    text: ' PMM',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: AppColor.grey100,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                ),
+                                const TextSpan(
+                                  text: ' PMM',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: AppColor.grey100,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
+                          ),
                         ],
                       ),
                     ),

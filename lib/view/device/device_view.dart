@@ -42,20 +42,20 @@ class DeviceView extends StatelessWidget {
           ),
         ],
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           child: Column(
             children: <Widget> [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget> [
-                  DeviceUpdateInformation(),
-                  RealtimeDevice()
+                  const DeviceUpdateInformation(),
+                  RealtimeDevice(deviceId: device.id),
                 ],
               ),
-              SizedBox(height: 20),
-              SizedBox(
+              const SizedBox(height: 20),
+              const SizedBox(
                 width: double.infinity,
                 child: Text(
                   'Historial ultima semana',
@@ -68,9 +68,9 @@ class DeviceView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              BarChartLastWeek(),
+              const BarChartLastWeek(),
               const SizedBox(height: 20),
-              SizedBox(
+              const SizedBox(
                 width: double.infinity,
                 child: Text(
                   'Ultimas horas',

@@ -41,7 +41,7 @@ class DeviceCard extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 5),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: device.type == 'Humedad' ? Colors.cyan[400] : Colors.red[500],
+                color: device.type == 'Humedad' ? AppColor.skyblue500 : AppColor.red400,
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

@@ -6,3 +6,5 @@ final deviceProvider = FutureProvider.autoDispose<List<Device>>((ref) async {
   final dynamic listDevices = await FirestoreDatabase().getDevices();
   return listDevices;
 });
+
+final deviceIdProvider = StateProvider<String>((ref) => '');

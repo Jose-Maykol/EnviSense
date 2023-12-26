@@ -1,6 +1,7 @@
 
 
 import 'package:airsense/models/contact.dart';
+import 'package:airsense/models/data.dart';
 import 'package:airsense/models/device.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +40,31 @@ class FirestoreDatabase {
     } catch (e) {
       print('Error getting devices: $e');
       return fetchedDevices;
+    }
+  }
+
+  Future<List<Data>> getDataLastWeek(deviceId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    List<Data> fetchedData = [];
+    DateTime now = DateTime.now();
+    DateTime lastWeek = now.subtract(const Duration(days: 7));
+
+    try {
+      print('deviceId Provider: $deviceId');
+      QuerySnapshot querySnapshot = await firestore.collection('data-history')
+        .where('deviceID', isEqualTo: deviceId)
+        .where('timestamp', isGreaterThan: lastWeek)
+        //.orderBy('timestamp', descending: true)
+        .get();
+      print('querySnapshot: ${querySnapshot.docs.length.toString()}');
+      for (var doc in querySnapshot.docs) {
+        Data data = Data.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>);
+        fetchedData.add(data);
+      }
+      return fetchedData;
+    } catch (e) {
+      print('Error getting data: $e');
+      return fetchedData;
     }
   }
 }

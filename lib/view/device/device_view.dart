@@ -9,10 +9,12 @@ import 'package:flutter/material.dart';
 class DeviceView extends StatelessWidget {
 
   final Device device;
+  final Color color;
 
   const DeviceView({
     Key? key, 
-    required this.device
+    required this.device,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -51,7 +53,7 @@ class DeviceView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget> [
                   const DeviceUpdateInformation(),
-                  RealtimeDevice(deviceId: device.id),
+                  RealtimeDevice(deviceId: device.id, color: color),
                 ],
               ),
               const SizedBox(height: 20),

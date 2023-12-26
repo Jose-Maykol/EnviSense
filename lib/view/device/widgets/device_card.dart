@@ -1,10 +1,12 @@
 import 'package:airsense/constant/colors.dart';
 import 'package:airsense/models/device.dart';
+import 'package:airsense/providers/device_provider.dart';
 import 'package:airsense/view/device/device_view.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DeviceCard extends StatelessWidget {
+class DeviceCard extends ConsumerWidget {
 
   final Device device;
   final DatabaseReference _deviceRef;
@@ -15,7 +17,10 @@ class DeviceCard extends StatelessWidget {
   }): 
     _deviceRef = FirebaseDatabase.instance.ref().child(device.id);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    ref.watch(deviceIdProvider.notifier).state;
+    
     return StreamBuilder(
       stream: _deviceRef.onValue,
       builder: (context, AsyncSnapshot<dynamic> snapshot) {
@@ -32,9 +37,10 @@ class DeviceCard extends StatelessWidget {
               Navigator.push(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => DeviceView(device: device)
+                  builder: (context) => DeviceView(device: device, color: device.type == 'Humedad' ? AppColor.skyblue500 : AppColor.red400),
                 ),
               );
+              ref.read(deviceIdProvider.notifier).state = device.id;
             },
             child: Container(
               // height: 150,

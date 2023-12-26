@@ -2,8 +2,18 @@ import 'package:airsense/constant/colors.dart';
 import 'package:airsense/widgets/headers/user_header.dart';
 import 'package:flutter/material.dart';
 
-class SettingsView extends StatelessWidget {
+class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
+
+  @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsViewState extends State<SettingsView> {
+
+  bool _switchNotification = false;
+  bool _switchNotificationContacts = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,9 +47,13 @@ class SettingsView extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               Switch(
-                value: false,
-                onChanged: (value) {},
-                activeTrackColor: AppColor.blue500,
+                value: _switchNotification,
+                onChanged: (value) {
+                  setState(() {
+                    _switchNotification = value;
+                  });
+                },
+                activeTrackColor: AppColor.blue100,
                 activeColor: AppColor.blue500,
               ),
             ],
@@ -57,9 +71,13 @@ class SettingsView extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               Switch(
-                value: false,
-                onChanged: (value) {},
-                activeTrackColor: AppColor.blue500,
+                value: _switchNotificationContacts,
+                onChanged: (value) {
+                  setState(() {
+                    _switchNotificationContacts = value;
+                  });
+                },
+                activeTrackColor: AppColor.blue100,
                 activeColor: AppColor.blue500,
               ),
             ],

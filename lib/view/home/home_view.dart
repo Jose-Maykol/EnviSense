@@ -32,6 +32,7 @@ class HomeView extends ConsumerWidget {
                   ),
                   textAlign: TextAlign.left,
                 ),
+                const SizedBox(height: 10),
                 Column(
                   children: devices.map((device) {
                     return DeviceCard(device: device);

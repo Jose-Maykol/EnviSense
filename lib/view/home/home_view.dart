@@ -26,13 +26,32 @@ class HomeView extends ConsumerWidget {
                 const Text(
                   'Tus dispositivos',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     color: AppColor.blue500,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
                 const SizedBox(height: 10),
+                if (devices.isEmpty)
+                  const SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: Text(
+                        'No tienes dispositivos',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColor.grey300,
+                        ),
+                      )
+                    ),
+                  )
+                else
+                  Column(
+                    children: devices.map((device) {
+                      return DeviceCard(device: device);
+                    }).toList(),
+                  ),
                 Column(
                   children: devices.map((device) {
                     return DeviceCard(device: device);

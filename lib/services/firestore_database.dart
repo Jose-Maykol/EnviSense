@@ -67,4 +67,29 @@ class FirestoreDatabase {
       return fetchedData;
     }
   }
+
+  Future<List<Data>> getDataLast8Hours(deviceId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    List<Data> fetchedData = [];
+    DateTime now = DateTime.now();
+    DateTime last8Hours = now.subtract(const Duration(hours: 8));
+
+    try {
+      print('deviceId Provider: $deviceId');
+      QuerySnapshot querySnapshot = await firestore.collection('data-history')
+        .where('deviceID', isEqualTo: deviceId)
+        .where('timestamp', isGreaterThan: last8Hours)
+        //.orderBy('timestamp', descending: true)
+        .get();
+      print('querySnapshot: ${querySnapshot.docs.length.toString()}');
+      for (var doc in querySnapshot.docs) {
+        Data data = Data.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>);
+        fetchedData.add(data);
+      }
+      return fetchedData;
+    } catch (e) {
+      print('Error getting data: $e');
+      return fetchedData;
+    }
+  }
 }

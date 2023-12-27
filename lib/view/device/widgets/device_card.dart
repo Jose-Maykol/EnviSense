@@ -27,6 +27,7 @@ class DeviceCard extends ConsumerWidget {
         if (snapshot.data!.snapshot.value == null) {
           return Container(
             height: 100,
+            margin: const EdgeInsets.symmetric(vertical: 5),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: AppColor.red100,
@@ -146,7 +147,12 @@ class DeviceCard extends ConsumerWidget {
             ),
           );
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return const SizedBox(
+            height: 100,
+            child: Center(
+              child: CircularProgressIndicator()
+            )
+          );
         }
       },
     );

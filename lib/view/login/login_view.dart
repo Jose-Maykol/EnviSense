@@ -54,8 +54,7 @@ class LoginView extends StatelessWidget {
       );
       User? user = userCredential.user;
       String? token = await userCredential.user?.getIdToken();
-      print("TOKENNNN");
-      print(token);
+      print('Token: $token');
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('user', user?.uid.toString() ?? '');
       prefs.setString('email', user?.email.toString() ?? '');
@@ -121,7 +120,7 @@ class LoginView extends StatelessWidget {
                     ),
                   const SizedBox(height: 20),
                   const Text(
-                    'AirSense',
+                    'EnviSense',
                     style: TextStyle(
                       fontSize: 24,
                       color: AppColor.blue400,

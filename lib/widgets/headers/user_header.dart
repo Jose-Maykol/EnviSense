@@ -1,4 +1,5 @@
 import 'package:airsense/constant/colors.dart';
+import 'package:airsense/view/login/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -100,7 +101,12 @@ class UserHeader extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  signOut().then((value) => Navigator.pushNamed(context, '/'));
+                  signOut().then((value) => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginView(),
+                    ),
+                  ));
                 },
                 iconSize: 25,
                 padding: const EdgeInsets.all(0),

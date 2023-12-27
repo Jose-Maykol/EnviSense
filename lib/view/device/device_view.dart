@@ -70,7 +70,7 @@ class DeviceView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const BarChartLastWeek(),
+              BarChartLastWeek(color: color),
               const SizedBox(height: 20),
               const SizedBox(
                 width: double.infinity,
@@ -85,7 +85,7 @@ class DeviceView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const LineChartLastHours()
+              LineChartLastHours(color: color),
             ],
           ),
         ),

@@ -6,7 +6,12 @@ import 'package:airsense/constant/colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BarChartLastWeek extends ConsumerWidget {
-  const BarChartLastWeek({super.key});
+  final Color color;
+
+  const BarChartLastWeek({
+    Key? key,
+    required this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -112,7 +117,7 @@ class BarChartLastWeek extends ConsumerWidget {
                   barRods: [
                     BarChartRodData(
                       toY: entry.value,
-                      color: AppColor.blue100,
+                      color: color,
                       width: 16,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(4),

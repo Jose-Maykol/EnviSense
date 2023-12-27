@@ -29,6 +29,7 @@ class LineChartLastHours extends ConsumerWidget {
 
             final dataForHour = data.where((element) {
               final DateTime elementDate = element.timestamp;
+              print(elementDate.toString());
               return elementDate.hour == hour.hour && 
                       elementDate.day == hour.day && 
                       elementDate.month == hour.month && 
@@ -46,8 +47,6 @@ class LineChartLastHours extends ConsumerWidget {
 
         final Map<int, double> hoursAverages = generateHoursAverages(data);
         List<double> values = hoursAverages.values.toList();
-
-        print('hoursAverages: $hoursAverages');
 
         return SizedBox(
           height: 200,
@@ -130,7 +129,14 @@ class LineChartLastHours extends ConsumerWidget {
           )
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => SizedBox(
+        height: 200,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: color,
+          ),
+        )
+      ),
       error: (error, stackTrace) => const Center(child: Text('Error')),
     );
   }

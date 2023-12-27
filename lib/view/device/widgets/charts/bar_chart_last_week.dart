@@ -133,9 +133,12 @@ class BarChartLastWeek extends ConsumerWidget {
           ),
         );
       },
-      loading: () => const SizedBox(
+      loading: () => SizedBox(
         height: 200,
-        child: Center(child: CircularProgressIndicator()
+        child: Center(
+          child: CircularProgressIndicator(
+            color: color,
+          )
         )
       ),
       error: (error, stackTrace) => Center(child: Text('Error: $error')),

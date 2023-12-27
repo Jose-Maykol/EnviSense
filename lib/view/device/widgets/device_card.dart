@@ -25,7 +25,27 @@ class DeviceCard extends ConsumerWidget {
       stream: _deviceRef.onValue,
       builder: (context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.data!.snapshot.value == null) {
-          return const Center(child: Text('Error'));
+          return Container(
+            height: 100,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              color: AppColor.red100,
+            ),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  'Lo sentimos, el dispositivo ${device.name} no está disponible 😢',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColor.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+          );
         }
         if (snapshot.hasData) {
           final deviceData = snapshot.data!.snapshot.value;
@@ -43,7 +63,7 @@ class DeviceCard extends ConsumerWidget {
               ref.read(deviceIdProvider.notifier).state = device.id;
             },
             child: Container(
-              // height: 150,
+              height: 100,
               margin: const EdgeInsets.symmetric(vertical: 5),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),

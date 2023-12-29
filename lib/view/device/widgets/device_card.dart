@@ -24,30 +24,6 @@ class DeviceCard extends ConsumerWidget {
     return StreamBuilder(
       stream: _deviceRef.onValue,
       builder: (context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.data!.snapshot.value == null) {
-          return Container(
-            height: 100,
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: AppColor.red100,
-            ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  'Lo sentimos, el dispositivo ${device.name} no está disponible 😢',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColor.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            )
-          );
-        }
         if (snapshot.hasData) {
           final deviceData = snapshot.data!.snapshot.value;
           final value = deviceData['value'];
@@ -145,6 +121,29 @@ class DeviceCard extends ConsumerWidget {
                 ),
               ),
             ),
+          );
+        } else if (snapshot.hasError) {
+          return Container(
+            height: 100,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              color: AppColor.red100,
+            ),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  'Lo sentimos, el dispositivo ${device.name} no está disponible 😢',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColor.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
           );
         } else {
           return const SizedBox(

@@ -15,7 +15,7 @@ class DeviceCard extends ConsumerWidget {
     super.key, 
     required this.device,
   }): 
-    _deviceRef = FirebaseDatabase.instance.ref().child(device.id);
+    _deviceRef = FirebaseDatabase.instance.ref().child('devices/${device.id}');
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 

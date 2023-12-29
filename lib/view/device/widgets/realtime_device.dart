@@ -13,7 +13,7 @@ class RealtimeDevice extends StatelessWidget {
     required this.deviceId,
     required this.color,
   }):
-    _deviceRef = FirebaseDatabase.instance.ref().child(deviceId);
+    _deviceRef = FirebaseDatabase.instance.ref().child('devices/$deviceId');
 
   @override
   Widget build(BuildContext context) {

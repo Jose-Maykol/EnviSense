@@ -13,7 +13,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   User? user = FirebaseAuth.instance.currentUser;
-  Widget startScreen = user == null ? LoginView() : MainView();
+  Widget startScreen = user == null ? LoginView() : const MainView();
   runApp(MyApp(startScreen: startScreen));
 }
 

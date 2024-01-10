@@ -23,22 +23,24 @@ class BarChartLastWeek extends ConsumerWidget {
         Map<String, double> generateDaysAverages(List<Data> data) {
           final Map<String, double> daysAverages = {};
           final DateTime today = DateTime.now();
-          const List<String> defaultDays = [ 'L', 'Ma', 'Mi', 'J', 'V', 'S', 'D'];
+          const List<String> defaultDays = ['L', 'Ma', 'Mi', 'J', 'V', 'S', 'D'];
+          final DateTime lastMonday = today.subtract(Duration(days: today.weekday - 1)); // Obtiene el lunes de la semana actual
 
           for (int i = 6; i >= 0; i--) {
-            final DateTime day = today.subtract(Duration(days: i));
-            final String dayInitial = defaultDays[day.weekday - 1];
+            final DateTime day = lastMonday.subtract(Duration(days: i));
+            final String dayInitial = defaultDays[(day.weekday + 6) % 7];
 
             final dataForDay = data.where((element) {
               final DateTime elementDate = element.timestamp;
-              return elementDate.day == day.day && 
-                      elementDate.month == day.month && 
-                      elementDate.year == day.year;
+              final DateTime startOfTheDay = DateTime(day.year, day.month, day.day);
+              final DateTime endOfTheDay = startOfTheDay.add( const Duration(days: 1));
+
+              return elementDate.isAfter(startOfTheDay) && elementDate.isBefore(endOfTheDay);
             }).toList();
 
-            final double dayAverage = dataForDay.isEmpty 
-              ? 0 
-              : dataForDay.map((data) => data.value).reduce((a, b) => a + b) / dataForDay.length;
+            final double dayAverage = dataForDay.isEmpty
+                ? 0
+                : dataForDay.map((data) => data.value).reduce((a, b) => a + b) / dataForDay.length;
 
             daysAverages[dayInitial] = dayAverage;
           }

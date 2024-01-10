@@ -47,7 +47,7 @@ class FirestoreDatabase {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     List<Data> fetchedData = [];
     DateTime now = DateTime.now();
-    DateTime lastWeek = now.subtract(const Duration(days: 7));
+    DateTime lastWeek = now.subtract(const Duration(days: 8));
 
     try {
       print('deviceId Provider: $deviceId');

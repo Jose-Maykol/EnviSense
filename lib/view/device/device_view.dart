@@ -52,7 +52,7 @@ class DeviceView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget> [
-                  const DeviceUpdateInformation(),
+                  DeviceUpdateInformation(deviceId: device.id),
                   RealtimeDevice(deviceId: device.id, color: color),
                 ],
               ),

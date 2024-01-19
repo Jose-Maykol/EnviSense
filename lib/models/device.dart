@@ -1,6 +1,8 @@
 
 
+import 'package:airsense/constant/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class Device {
   final String id;
@@ -28,6 +30,32 @@ class Device {
       'unit': unit,
       'userId': userId,
     };
+  }
+
+  IconData getIcon() {
+    switch (type.toLowerCase()) {
+      case 'humedad':
+        return Icons.water_drop;
+      case 'temperatura':
+        return Icons.thermostat_rounded;
+      case 'aire':
+        return Icons.air;
+      default:
+        return Icons.device_unknown;
+    }
+  }
+
+  Color getColor() {
+    switch (type.toLowerCase()) {
+      case 'humedad':
+        return AppColor.deepBlue;
+      case 'temperatura':
+        return AppColor. brightSkyBlue;
+      case 'aire':
+        return AppColor.skyBlue;
+      default:
+        return Colors.grey;
+    }
   }
 
   factory Device.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {

@@ -27,34 +27,44 @@ class DeviceCard extends ConsumerWidget {
         if (snapshot.hasData) {
           final deviceData = snapshot.data!.snapshot.value;
           final value = deviceData['value'];
-          final category = deviceData['category'];
+          // final category = deviceData['category'];
 
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => DeviceView(device: device, color: device.type == 'Humedad' ? AppColor.skyblue500 : AppColor.red400),
+                  builder: (context) => DeviceView(
+                    device: device,
+                    color: device.getColor()
+                  ),
                 ),
               );
               ref.read(deviceIdProvider.notifier).state = device.id;
             },
             child: Container(
-              height: 100,
+              height: 190,
+              width: MediaQuery.of(context).size.width * 0.40,
               margin: const EdgeInsets.symmetric(vertical: 5),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: device.type == 'Humedad' ? AppColor.skyblue500 : AppColor.red400,
+                color: device.getColor(),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Row(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        Icon(
+                          device.getIcon(),
+                          size: 30,
+                          color: AppColor.white,
+                        ),
+                        const SizedBox(width: 10),
                         Text(
                           device.name,
                           style: const TextStyle(
@@ -63,8 +73,10 @@ class DeviceCard extends ConsumerWidget {
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
-                        Text(
+                        /* Text(
                           device.type,
                           style: const TextStyle(
                             fontSize: 14,
@@ -72,51 +84,59 @@ class DeviceCard extends ConsumerWidget {
                             fontWeight: FontWeight.w500,
                           ),
                           textAlign: TextAlign.left,
-                        ),
+                        ), */
                       ],
                     ),
                     const SizedBox(height: 10),
-                    SizedBox(
-                      width: 75,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            category ?? '',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: AppColor.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 2),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: value.toString(),
-                                  style: const TextStyle(
-                                    fontSize: 30,
-                                    color: AppColor.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                    Expanded(
+                      child: Center(
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: value.toString(),
+                                style: const TextStyle(
+                                  fontSize: 55,
+                                  color: AppColor.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                TextSpan(
-                                  text: device.unit,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: AppColor.white,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                              ),
+                              TextSpan(
+                                text: device.unit,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  color: AppColor.white,
+                                  fontWeight: FontWeight.w400,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    )
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'ON',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColor.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        Switch(
+                          value: true,
+                          onChanged: (value) {},
+                          activeTrackColor: AppColor.white,
+                          activeColor: device.getColor(),
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -124,7 +144,8 @@ class DeviceCard extends ConsumerWidget {
           );
         } else if (snapshot.hasError) {
           return Container(
-            height: 100,
+            height: 190,
+            width: MediaQuery.of(context).size.width * 0.40,
             margin: const EdgeInsets.symmetric(vertical: 5),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -146,9 +167,10 @@ class DeviceCard extends ConsumerWidget {
             )
           );
         } else {
-          return const SizedBox(
-            height: 100,
-            child: Center(
+          return SizedBox(
+            height: 190,
+            width: MediaQuery.of(context).size.width * 0.40,
+            child: const Center(
               child: CircularProgressIndicator()
             )
           );

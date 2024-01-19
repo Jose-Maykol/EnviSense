@@ -29,4 +29,10 @@ class AppColor {
   static const grey300 = Color(0xFF737373);
   static const grey400 = Color(0xFF565656);
   static const grey500 = Color(0xFF3A3A3A);
+
+  static const deepBlue = Color(0xFF0047FB);
+  static const brightSkyBlue = Color(0xFF0073FF);
+  static const skyBlue = Color(0xFF008CFF);
+  static const turquoiseBlue = Color(0xFF009CF0);
+  static const aquamarineBlue = Color(0xFF00A7B8);
 }

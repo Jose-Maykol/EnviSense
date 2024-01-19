@@ -70,6 +70,24 @@ class ContactsView extends ConsumerWidget {
                           contentPadding: EdgeInsets.zero,
                           isThreeLine: true,
                           dense: true,
+                          leading: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: AppColor.blue100,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Center(
+                              child: Text(
+                                contacts[index].name[0].toUpperCase(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.white,
+                                ),
+                              ),
+                            ),
+                          ),
                           title: Text(
                             contacts[index].name,
                             style: const TextStyle(

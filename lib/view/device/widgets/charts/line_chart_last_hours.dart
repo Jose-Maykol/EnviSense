@@ -29,7 +29,6 @@ class LineChartLastHours extends ConsumerWidget {
 
             final dataForHour = data.where((element) {
               final DateTime elementDate = element.timestamp;
-              print(elementDate.toString());
               return elementDate.hour == hour.hour && 
                       elementDate.day == hour.day && 
                       elementDate.month == hour.month && 

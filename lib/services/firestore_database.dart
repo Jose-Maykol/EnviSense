@@ -50,20 +50,16 @@ class FirestoreDatabase {
     DateTime lastWeek = now.subtract(const Duration(days: 8));
 
     try {
-      print('deviceId Provider: $deviceId');
       QuerySnapshot querySnapshot = await firestore.collection('data-history')
         .where('deviceID', isEqualTo: deviceId)
         .where('timestamp', isGreaterThan: lastWeek)
-        //.orderBy('timestamp', descending: true)
         .get();
-      print('querySnapshot: ${querySnapshot.docs.length.toString()}');
       for (var doc in querySnapshot.docs) {
         Data data = Data.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>);
         fetchedData.add(data);
       }
       return fetchedData;
     } catch (e) {
-      print('Error getting data: $e');
       return fetchedData;
     }
   }
@@ -75,20 +71,16 @@ class FirestoreDatabase {
     DateTime last8Hours = now.subtract(const Duration(hours: 8));
 
     try {
-      print('deviceId Provider: $deviceId');
       QuerySnapshot querySnapshot = await firestore.collection('data-history')
         .where('deviceID', isEqualTo: deviceId)
         .where('timestamp', isGreaterThan: last8Hours)
-        //.orderBy('timestamp', descending: true)
         .get();
-      print('querySnapshot: ${querySnapshot.docs.length.toString()}');
       for (var doc in querySnapshot.docs) {
         Data data = Data.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>);
         fetchedData.add(data);
       }
       return fetchedData;
     } catch (e) {
-      print('Error getting data: $e');
       return fetchedData;
     }
   }

@@ -50,4 +50,4 @@ app.*.map.json
 # macos/firebase_app_id_file.json
 # ios/firebase_app_id_file.jsons
 
-lib/firebase_options.dart
+# lib/firebase_options.dart

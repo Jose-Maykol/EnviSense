@@ -6,11 +6,13 @@ class RealtimeDevice extends StatelessWidget {
 
   final DatabaseReference _deviceRef;
   final String deviceId;
+  final String deviceUnit;
   final Color color;
 
   RealtimeDevice({
     super.key,
     required this.deviceId,
+    required this.deviceUnit,
     required this.color,
   }):
     _deviceRef = FirebaseDatabase.instance.ref().child('devices/$deviceId');
@@ -87,9 +89,9 @@ class RealtimeDevice extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const TextSpan(
-                                  text: ' PMM',
-                                  style: TextStyle(
+                                TextSpan(
+                                  text: deviceUnit,
+                                  style: const TextStyle(
                                     fontSize: 15,
                                     color: AppColor.white,
                                     fontWeight: FontWeight.bold,

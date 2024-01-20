@@ -53,7 +53,11 @@ class DeviceView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget> [
                   DeviceUpdateInformation(deviceId: device.id),
-                  RealtimeDevice(deviceId: device.id, color: color),
+                  RealtimeDevice(
+                    deviceId: device.id, 
+                    deviceUnit: device.unit,
+                    color: color
+                  ),
                 ],
               ),
               const SizedBox(height: 20),

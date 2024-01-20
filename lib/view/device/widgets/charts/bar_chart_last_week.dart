@@ -24,7 +24,7 @@ class BarChartLastWeek extends ConsumerWidget {
           final Map<String, double> daysAverages = {};
           final DateTime today = DateTime.now();
           const List<String> defaultDays = ['L', 'Ma', 'Mi', 'J', 'V', 'S', 'D'];
-          final DateTime lastMonday = today.subtract(Duration(days: today.weekday - 1)); // Obtiene el lunes de la semana actual
+          final DateTime lastMonday = today.subtract(Duration(days: today.weekday - 1));
 
           for (int i = 6; i >= 0; i--) {
             final DateTime day = lastMonday.subtract(Duration(days: i));

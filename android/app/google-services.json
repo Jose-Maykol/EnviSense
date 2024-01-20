@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "991271409178",
+    "project_id": "team-pe",
+    "storage_bucket": "team-pe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991271409178:android:8eebf3449c65a81a6a63a3",
+        "android_client_info": {
+          "package_name": "com.example.airsense"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991271409178-c7kn2ie2c48du2ki84rl1hfocgc4k159.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVCL5wGz1xWka9aKTnBKhzS5TRrajvLVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991271409178-c7kn2ie2c48du2ki84rl1hfocgc4k159.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "991271409178-1nn2nb4lqf3cia4aim6q2s1i1f2cv94o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.airsense.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,46 +14,55 @@ class HomeView extends ConsumerWidget {
 
     return devicesAsyncValue.when(
       data: (devices) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget> [
-                const UserHeader(),
-                const SizedBox(height: 20),
-                const Text(
-                  'Tus dispositivos',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: AppColor.blue500,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.left,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget> [
+              const UserHeader(),
+              const SizedBox(height: 20),
+              const Text(
+                'Tus dispositivos',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: AppColor.blue500,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 10),
-                if (devices.isEmpty)
-                  const SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: Text(
-                        'No tienes dispositivos',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColor.grey300,
-                        ),
-                      )
-                    ),
-                  )
-                else
-                  Column(
-                    children: devices.map((device) {
-                      return DeviceCard(device: device);
-                    }).toList(),
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: 10),
+              if (devices.isEmpty)
+                const SizedBox(
+                  height: 100,
+                  child: Center(
+                    child: Text(
+                      'No tienes dispositivos',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColor.grey300,
+                      ),
+                    )
                   ),
-              ],
-            ),
+                )
+              else
+                GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, 
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 10.0,
+                    childAspectRatio: 0.9,
+                  ),
+                  padding: const EdgeInsets.all(0),
+                  primary: false,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: devices.length,
+                  itemBuilder: (context, index) {
+                    return DeviceCard(device: devices[index]);
+                  },
+                )
+            ],
           ),
         );
       },

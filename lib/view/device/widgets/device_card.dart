@@ -44,7 +44,7 @@ class DeviceCard extends ConsumerWidget {
             },
             child: Container(
               height: 190,
-              width: MediaQuery.of(context).size.width * 0.40,
+              width: MediaQuery.of(context).size.width * 0.4,
               margin: const EdgeInsets.symmetric(vertical: 5),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -96,15 +96,15 @@ class DeviceCard extends ConsumerWidget {
                               TextSpan(
                                 text: value.toString(),
                                 style: const TextStyle(
-                                  fontSize: 55,
+                                  fontSize: 45,
                                   color: AppColor.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               TextSpan(
-                                text: device.unit,
+                                text: ' ${device.unit}',
                                 style: const TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 20,
                                   color: AppColor.white,
                                   fontWeight: FontWeight.w400,
                                 ),

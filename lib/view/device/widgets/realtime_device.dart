@@ -51,14 +51,6 @@ class RealtimeDevice extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.green,
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -109,7 +101,12 @@ class RealtimeDevice extends StatelessWidget {
             ),
           );
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return SizedBox(
+            width: MediaQuery.of(context).size.width * 0.39,
+            child: const Center(
+              child: CircularProgressIndicator()
+              )
+            );
         }
       },
     );

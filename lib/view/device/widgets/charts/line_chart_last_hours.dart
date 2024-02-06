@@ -63,11 +63,11 @@ class LineChartLastHours extends ConsumerWidget {
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    interval: 5,
+                    interval: (hoursAverages.values.toList()..sort()).last / 5,
                     getTitlesWidget: (value, meta) => Text(
                       value.toInt().toString(),
                       style: const TextStyle(
-                        fontSize: 10,
+                        fontSize: 8,
                         color: AppColor.grey200,
                         fontWeight: FontWeight.bold,
                       ),

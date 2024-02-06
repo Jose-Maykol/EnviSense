@@ -64,7 +64,7 @@ class BarChartLastWeek extends ConsumerWidget {
                     getTitlesWidget: (value, meta) => Text(
                       value.toInt().toString(),
                       style: const TextStyle(
-                        fontSize: 10,
+                        fontSize: 8,
                         color: AppColor.grey200,
                         fontWeight: FontWeight.bold,
                       ),

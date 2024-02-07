@@ -2,6 +2,7 @@ import 'package:airsense/constant/colors.dart';
 import 'package:airsense/models/device.dart';
 import 'package:airsense/providers/device_provider.dart';
 import 'package:airsense/view/device/device_view.dart';
+import 'package:airsense/view/device/widgets/device_switch.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,7 @@ class DeviceCard extends ConsumerWidget {
     required this.device,
   }): 
     _deviceRef = FirebaseDatabase.instance.ref().child('devices/${device.id}');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
@@ -76,15 +78,6 @@ class DeviceCard extends ConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                        /* Text(
-                          device.type,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColor.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.left,
-                        ), */
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -115,28 +108,7 @@ class DeviceCard extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'ON',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AppColor.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                        Switch(
-                          value: true,
-                          onChanged: (value) {},
-                          activeTrackColor: AppColor.white,
-                          activeColor: device.getColor(),
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                      ],
-                    ),
+                    DeviceSwitch(device: device),
                   ],
                 ),
               ),
@@ -179,3 +151,4 @@ class DeviceCard extends ConsumerWidget {
     );
   }
 }
+

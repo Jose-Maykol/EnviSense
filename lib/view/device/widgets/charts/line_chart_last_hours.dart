@@ -45,6 +45,7 @@ class LineChartLastHours extends ConsumerWidget {
         }
 
         final Map<int, double> hoursAverages = generateHoursAverages(data);
+        print(hoursAverages);
         List<double> values = hoursAverages.values.toList();
 
         return SizedBox(
@@ -63,7 +64,7 @@ class LineChartLastHours extends ConsumerWidget {
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    interval: (hoursAverages.values.toList()..sort()).last / 5,
+                    interval: values.every((value) => value == 0) ? 20 : (hoursAverages.values.toList()..sort()).last / 5,
                     getTitlesWidget: (value, meta) => Text(
                       value.toInt().toString(),
                       style: const TextStyle(

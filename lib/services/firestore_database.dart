@@ -33,7 +33,6 @@ class FirestoreDatabase {
       QuerySnapshot querySnapshot = await firestore.collection('devices').get();
       for (var doc in querySnapshot.docs) {
         Device device = Device.fromSnapshot(doc as DocumentSnapshot<Map<String, dynamic>>);
-        print(doc.data());
         fetchedDevices.add(device);
       }
       return fetchedDevices;

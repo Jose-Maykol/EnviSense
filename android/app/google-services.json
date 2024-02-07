@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "991271409178",
+    "firebase_url": "https://team-pe-default-rtdb.firebaseio.com",
     "project_id": "team-pe",
     "storage_bucket": "team-pe.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "991271409178-3tr6qijh07p9tvgsb39g0t0t1anq9vi6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.airsense",
+            "certificate_hash": "c096621b0f32d247d00499d8b33245d953771abd"
+          }
+        },
         {
           "client_id": "991271409178-c7kn2ie2c48du2ki84rl1hfocgc4k159.apps.googleusercontent.com",
           "client_type": 3

@@ -45,7 +45,6 @@ class LineChartLastHours extends ConsumerWidget {
         }
 
         final Map<int, double> hoursAverages = generateHoursAverages(data);
-        print(hoursAverages);
         List<double> values = hoursAverages.values.toList();
 
         return SizedBox(

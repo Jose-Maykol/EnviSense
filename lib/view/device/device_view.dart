@@ -37,12 +37,6 @@ class DeviceView extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        actions: <Widget> [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
